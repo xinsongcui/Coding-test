@@ -1,0 +1,41 @@
+// you can use includes, for example:
+// #include <algorithm>
+
+// you can write to stdout for debugging purposes, e.g.
+// cout << "this is a debug message" << endl;
+
+int solution(vector<int> &A) {
+    // write your code in C++14 (g++ 6.2.0)
+    int min_so_far = A[0];
+    int pre_min= 0;
+    int pre_max = 0;
+    int slices = 1;
+    int blocks = 0;
+    vector<int> min;
+    
+    for(int i=0; i<A.size(); i++){
+        if(A[i] > pre_max){
+            if(blocks < 2){
+                blocks++;
+                pre_max = A[i];
+            }
+            else{
+                slices++;
+                blocks = 1;
+                min.push_back(pre_min);
+                pre_min = min_so_far;
+                pre_max = A[i];
+            }
+        }
+        else if(A[i] < pre_min){
+            slices--;
+            blocks = 3;
+            pre_min = min.back();
+            min.pop_back();
+        }
+        else blocks++;
+        if(A[i] <  min_so_far) min_so_far = A[i];
+        
+    }
+    return slices;
+}
