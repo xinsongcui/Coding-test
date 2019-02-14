@@ -1,0 +1,41 @@
+// you can use includes, for example:
+// #include <algorithm>
+#include <vector>
+#include <sstream>
+// you can write to stdout for debugging purposes, e.g.
+// cout << "this is a debug message" << endl;
+
+int solution(string &S) {
+    // write your code in C++14 (g++ 6.2.0)
+    istringstream iss(S);
+    vector<int> result;
+    for(string s; iss >> s;){
+        if(s.compare("POP") == 0){
+            result.pop_back();
+        }
+        else if(s.compare("DUP") == 0){
+            result.push_back(result.back());
+        }
+        else if(s.compare("+") == 0){
+            if(result.size()<2)return -1;
+            int x = result.back();
+            result.pop_back();
+            int y = result.back();
+            result.pop_back();
+            result.push_back(x+y);
+        }
+        else if(s.compare("-") == 0){
+            if(result.size()<2)return -1;
+            int x = result.back();
+            result.pop_back();
+            int y = result.back();
+            result.pop_back();
+            result.push_back(x-y);
+        }
+        else {
+            int i = stoi(s);
+            result.push_back(i);
+        }
+    }
+    return result.back();
+}
