@@ -1,0 +1,42 @@
+// you can use includes, for example:
+// #include <algorithm>
+
+// you can write to stdout for debugging purposes, e.g.
+// cout << "this is a debug message" << endl;
+int fact(int n){
+    if(n <= 1)return 1;
+    return n * fact(n - 1);
+}
+int solution(int N) {
+    // write your code in C++14 (g++ 6.2.0)
+    if(N == 0)return 1;
+    int r;
+    int zeroCount = 0;
+    int nonZeroCount = 0;
+    int totalCount = 0;
+    int digit[10];
+    for(int i=0; i<10; i++)digit[i] = 0;
+    while(N>0){
+        r = N%10;
+        if(r != 0){
+            nonZeroCount++;
+            digit[r]++;
+        }
+        else zeroCount++;
+        totalCount++;
+        N = N/10;
+    }
+    //int y = (totalCount-zeroCount) * fact(nonZeroCount-1);
+    int y = fact(totalCount)/fact(zeroCount);
+    //cout << nonZeroCount << " " << zeroCount;
+    int x = 1;
+    int numCount = 0;
+    for(int i=1; i<10; i++){
+        if(digit[i]!=0){
+             x = x * fact(digit[i]);
+            numCount++;
+        }
+    }
+    if(zeroCount == 0) return y/x;
+    else return y/x - zeroCount* fact(numCount);
+}
